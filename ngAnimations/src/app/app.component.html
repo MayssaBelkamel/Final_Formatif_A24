@@ -1,12 +1,12 @@
 <div style="padding: 20px">
   <h1>Animation Angular</h1>
-  <button mat-raised-button color="accent">Animer une fois</button>
+  <button mat-raised-button color="accent" (click)="mavariable=mavariable-1">Animer une fois</button>
   <button mat-raised-button color="accent">Animer en boucle</button>
-  <div class="square" style="background-color: red;"></div>
+  <div [@shake]="mavariable" class="square" style="background-color: red;"></div>
 
-  <div class="square" style="background-color: green;"></div>
+  <div [@bounce]="mavariable" class="square" style="background-color: green;"></div>
 
-  <div class="square" style="background-color: blue;"></div>
+  <div [@tada]="mavariable" class="square" style="background-color: blue;"></div>
 </div>
 <div style="padding: 20px">
   <h1>Animation CSS</h1>
