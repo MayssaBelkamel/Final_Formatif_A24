@@ -47,7 +47,7 @@ public class MathBackgroundService : BackgroundService
 
     public void RemoveUser(string userId)
     {
-        if (!_data.ContainsKey(userId))
+        if (/*!*/_data.ContainsKey(userId))
         {
             _data[userId].NbConnections--;
             if(_data[userId].NbConnections <= 0)
@@ -88,11 +88,11 @@ public class MathBackgroundService : BackgroundService
             // TODO: Modifier et sauvegarder le NbRightAnswers des joueurs qui ont la bonne réponse
             if (userData.Choice == _currentQuestion!.RightAnswerIndex)
             {
-                    await _mathQuestionHub.Clients.User(userId)
+                    await _mathQuestionHub.Clients.Client(userId)
                       .SendAsync("GoodAnswer");
 
-                    var player = await db.Player.FirstAsync(p => p.Id.ToString() == userId);
-                    player.NbRightAnswers++;
+                    //var player = await db.Player.FirstOrDefaultAsync(p => p.Id == userId);
+                  //  player.NbRightAnswers++;
                     await db.SaveChangesAsync();
                 }
             else
@@ -100,8 +100,8 @@ public class MathBackgroundService : BackgroundService
                     await _mathQuestionHub.Clients.User(userId)
                    .SendAsync("BadAnswer");
 
-                    var player = await db.Player.FirstAsync(p => p.Id.ToString() == userId);
-                    player.NbRightAnswers++;
+                    var player = await db.Player.FirstOrDefaultAsync(p => p.Id.ToString() == userId);
+            
                     await db.SaveChangesAsync();
                 }
 

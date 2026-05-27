@@ -99,6 +99,19 @@ export class AppComponent {
 
     if (!this.hubConnection) return;
 
+    this.hubConnection.on('GoodAnswer', () => {
+  this.zone.run(() => {
+    alert("Bonne réponse !");
+    this.nbRightAnswers++;
+  });
+});
+
+this.hubConnection.on('BadAnswer', (correctAnswer: number) => {
+  this.zone.run(() => {
+    alert("Mauvaise réponse ! La bonne réponse était " + correctAnswer);
+  });
+});
+
     this.hubConnection.on('PlayerInfo', (data: PlayerInfoDTO) => {
       this.zone.run(() => {
         console.log(data);
