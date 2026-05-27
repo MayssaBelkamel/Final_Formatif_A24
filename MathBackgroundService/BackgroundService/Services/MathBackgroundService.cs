@@ -88,11 +88,9 @@ public class MathBackgroundService : BackgroundService
             // TODO: Modifier et sauvegarder le NbRightAnswers des joueurs qui ont la bonne réponse
             if (userData.Choice == _currentQuestion!.RightAnswerIndex)
             {
-                    await _mathQuestionHub.Clients.Client(userId)
-                      .SendAsync("GoodAnswer");
-
-                    //var player = await db.Player.FirstOrDefaultAsync(p => p.Id == userId);
-                  //  player.NbRightAnswers++;
+                    await _mathQuestionHub.Clients.User(userId).SendAsync("GoodAnswer");
+                    Player player = await db.Player.Where(p => p.UserId == userId).SingleAsync();
+                    player.NbRightAnswers++;
                     await db.SaveChangesAsync();
                 }
             else
